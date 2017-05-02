@@ -9,7 +9,7 @@ RSS_FEEDS = {'bbc':'http://feeds.bbci.co.uk/news/rss.xml',
 @app.route('/')
 def home():
     feed = feedparser.parse(BBC_FEED)
-    first_article = feed['entries'][0]
+    # first_article = feed['entries'][0]
     # return '''<html>
     #           <body>
     #           <h1> BBC Headlines </h1>
@@ -19,11 +19,11 @@ def home():
     #           </body>
     #           </html>'''.format(first_article.get('title'), first_article.get('published'), first_article.get('summary'))
     # return render_template('home.html',title = first_article.get('title'), published = first_article.get('published'), summary = first_article.get('summary'))
-    return render_template('home.html', article = first_article)
+    return render_template('home.html', articles = feed['entries'])
 @app.route('/<publicationname>')
 def get_news(publicationname):
     feed = feedparser.parse(RSS_FEEDS[publicationname])
-    first_article = feed['entries'][0]
+    # first_article = feed['entries'][0]
     # return '''<html>
     #           <body>
     #           <h1> BBC Headlines </h1>
