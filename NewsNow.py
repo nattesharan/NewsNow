@@ -33,6 +33,6 @@ def get_news(publicationname):
     #           </body>
     #           </html>'''.format(first_article.get('title'), first_article.get('published'), first_article.get('summary'))
     # return render_template('home.html',title = first_article.get('title'), published = first_article.get('published'), summary = first_article.get('summary'))
-    return render_template('home.html', article = first_article)
+    return render_template('home.html', articles = feed['entries'])
 if __name__ == '__main__':
     app.run(port=int("3000"),debug = True)
