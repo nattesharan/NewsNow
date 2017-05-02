@@ -18,7 +18,8 @@ def home():
     #           <p>{2}</p> <br/>
     #           </body>
     #           </html>'''.format(first_article.get('title'), first_article.get('published'), first_article.get('summary'))
-    return render_template('home.html',title = first_article.get('title'), published = first_article.get('published'), summary = first_article.get('summary'))
+    # return render_template('home.html',title = first_article.get('title'), published = first_article.get('published'), summary = first_article.get('summary'))
+    return render_template('home.html', article = first_article)
 @app.route('/<publicationname>')
 def get_news(publicationname):
     feed = feedparser.parse(RSS_FEEDS[publicationname])
@@ -31,6 +32,7 @@ def get_news(publicationname):
     #           <p>{2}</p> <br/>
     #           </body>
     #           </html>'''.format(first_article.get('title'), first_article.get('published'), first_article.get('summary'))
-    return render_template('home.html',title = first_article.get('title'), published = first_article.get('published'), summary = first_article.get('summary'))
+    # return render_template('home.html',title = first_article.get('title'), published = first_article.get('published'), summary = first_article.get('summary'))
+    return render_template('home.html', article = first_article)
 if __name__ == '__main__':
     app.run(port=int("3000"),debug = True)
