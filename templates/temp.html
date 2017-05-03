@@ -4,8 +4,11 @@
         <input type='text' name='city' placeholder='search city'>
         <input type='submit' value='submit'>
     </form>
+    <p>
+        {{parsed}}
+    </p>
     <h2>Current weather</h2>
-    <p>City: <b>{{weather.city}}</b></p>
+    <p>City: <b>{{weather.city}}, {{ weather.country }}</b></p>
     <p>{{weather.description}} |{{weather.temperature}}&#8451;</p>
 </body>
 </html>
