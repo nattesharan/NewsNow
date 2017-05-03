@@ -1,4 +1,28 @@
 <html>
+    <head>
+        <title>Weather</title>
+        <style>
+            html {
+                font-family: "Helvetica";
+                background: white;
+            }
+            body {
+                background: lightgrey;
+                max-width: 100%;
+                margin: 0 auto;
+                }
+            #header {
+                background: lightsteelblue;
+                padding-top: 5px;
+                }
+            #inner-header {
+                padding-left: 10px;
+                }
+            #main{
+                padding-left: 10px;
+                }
+        </style>
+    </head>
 <body>
     <form action='/temp' method='post'>
         <input type='text' name='city' placeholder='search city'>
@@ -6,8 +30,14 @@
     </form>
     <h1><a href='/'>Click here for getting the news</a></h1>
     <hr/>
-    <h2>Current weather</h2>
-    <p>City: <b>{{weather.city}}, {{ weather.country }}</b></p>
-    <p>{{weather.description}} |{{weather.temperature}}&#8451;</p>
+    <div id = 'header'>
+        <div id = 'inner-header'>
+            <h2>Current weather</h2>
+        </div>
+    </div>
+    <div id = 'main'>
+        <p>City: <b>{{weather.city}}, {{ weather.country }}</b></p>
+        <p>{{weather.description}} |{{weather.temperature}}&#8451;</p>
+    </div>
 </body>
 </html>
