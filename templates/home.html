@@ -14,7 +14,10 @@
             <li>fox</li>
             <li>iol</li>
         </ul>
-        <h1><a href='/temp' target='_blank'>Click here for getting the temperature</a></h1>
+        <h1><a href='/temp'>Click here for getting the temperature</a></h1>
+        <hr/>
+        <h1><a href='/currency'>Click here for finding currency exchange rates</a></h1>
+        <hr/>
         <h1>Headlines</h1>
         {% for article in articles %}
         <b><a href= '{{ article.link}}' target='_blank'>{{ article.title }}</a></b><br />

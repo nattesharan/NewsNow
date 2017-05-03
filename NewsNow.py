@@ -64,5 +64,8 @@ def get_weather(query):
             'country': parsed['sys']['country']
         }
     return weather
+@app.route('/currency')
+def currency():
+    return render_template('currency.html')
 if __name__ == '__main__':
     app.run(port=int("3000"),debug = True)
