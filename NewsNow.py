@@ -27,5 +27,8 @@ def home():
 def get_news(publicationname):
     feeds = feedparser.parse(RSS_FEEDS[publicationname])
     return feeds['entries']
+@app.route('/temp')
+def temp():
+    return render_template('temp.html')
 if __name__ == '__main__':
     app.run(port=int("3000"),debug = True)
