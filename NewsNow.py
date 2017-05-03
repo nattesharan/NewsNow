@@ -24,9 +24,17 @@ def home():
         if not errors:
             articles = get_news(publicationname)
     else:
-        feeds =  feedparser.parse(RSS_FEEDS['bbc'])
+        publicationname = request.cookies.get('publicationname')
+        if publicationname == None:
+            publicationname = 'bbc'
+        else:
+            publicationname = request.cookies.get('publicationname')
+        feeds =  feedparser.parse(RSS_FEEDS[publicationname])
         articles = feeds['entries']
-    return render_template('home.html',articles = articles)
+    resp = make_response(render_template('home.html',articles = articles))
+    expires = datetime.datetime.now() + datetime.timedelta(days=365)
+    resp.set_cookie('publicationname',publicationname, expires = expires)
+    return resp
 def get_news(publicationname):
     feeds = feedparser.parse(RSS_FEEDS[publicationname])
     return feeds['entries']
@@ -41,13 +49,20 @@ def temp():
         weather = get_weather(city)
     else:
         api_url = 'http://api.openweathermap.org/data/2.5/weather?q={}&units=metric&APPID=678c9a313a7a3293f3186ba63375e0c6'
-        query = urllib.quote('Hyderabad')
+        city = request.cookies.get('city')
+        if city == None:
+            city = 'Hyderabad'
+        else:
+            city = request.cookies.get('city')
+        query = urllib.quote(city)
         url = api_url.format(query)
         data = urllib2.urlopen(url).read()
         parsed = json.loads(data)
-        city = 'Hyderabad'
         weather = get_weather(city)
-    return render_template('temp.html',weather = weather)
+    resp = make_response(render_template('temp.html',weather = weather))
+    expires = datetime.datetime.now() + datetime.timedelta(days=365)
+    resp.set_cookie('city',city,expires=expires)
+    return resp
 def get_weather(query):
     api_url = 'http://api.openweathermap.org/data/2.5/weather?q={}&units=metric&APPID=678c9a313a7a3293f3186ba63375e0c6'
     query = urllib.quote(query)
