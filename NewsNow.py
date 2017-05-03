@@ -1,5 +1,8 @@
 import feedparser
 from flask import Flask,render_template,request
+import urllib
+import urllib2
+import json
 app = Flask(__name__)
 BBC_FEED = "http://feeds.bbci.co.uk/news/rss.xml"
 RSS_FEEDS = {'bbc':'http://feeds.bbci.co.uk/news/rss.xml',
@@ -27,8 +30,33 @@ def home():
 def get_news(publicationname):
     feeds = feedparser.parse(RSS_FEEDS[publicationname])
     return feeds['entries']
-@app.route('/temp')
+@app.route('/temp',methods = ['POST','GET'])
 def temp():
-    return render_template('temp.html')
+    if request.method == 'POST':
+        city = request.form['city']
+        if city == '':
+            city = 'Hyderabad'
+        else:
+            city = request.form['city']
+        weather = get_weather(city)
+        return render_template('temp.html',weather = weather)
+    else:
+        city = 'Hyderabad'
+        weather = get_weather(city)
+        return render_template('temp.html',weather = weather)
+def get_weather(query):
+    api_url = 'http://api.openweathermap.org/data/2.5/weather?q={}&units=metric&APPID=678c9a313a7a3293f3186ba63375e0c6'
+    query = urllib.quote(query)
+    url = api_url.format(query)
+    data = urllib2.urlopen(url).read()
+    parsed = json.loads(data)
+    weather = None
+    if parsed.get('weather'):
+        weather = {
+            'description':parsed['weather'][0]['description'],
+            'temperature':parsed['main']['temp'],
+            'city':parsed['name']
+        }
+    return weather
 if __name__ == '__main__':
     app.run(port=int("3000"),debug = True)
