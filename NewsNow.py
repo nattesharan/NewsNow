@@ -48,7 +48,7 @@ def temp():
         parsed = json.loads(data)
         city = 'Hyderabad'
         weather = get_weather(city)
-        return render_template('temp.html',weather = weather, parsed= parsed)
+        return render_template('temp.html',weather = weather)
 def get_weather(query):
     api_url = 'http://api.openweathermap.org/data/2.5/weather?q={}&units=metric&APPID=678c9a313a7a3293f3186ba63375e0c6'
     query = urllib.quote(query)
@@ -64,8 +64,5 @@ def get_weather(query):
             'country': parsed['sys']['country']
         }
     return weather
-@app.route('/currency')
-def currency():
-    return render_template('currency.html')
 if __name__ == '__main__':
     app.run(port=int("3000"),debug = True)
