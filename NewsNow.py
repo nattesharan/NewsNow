@@ -1,5 +1,6 @@
 import feedparser
-from flask import Flask,render_template,request
+from flask import Flask,render_template,request,make_response
+import datetime
 import urllib
 import urllib2
 import json
@@ -22,11 +23,10 @@ def home():
                 publicationname = 'bbc'
         if not errors:
             articles = get_news(publicationname)
-        return render_template('home.html',articles = articles)
     else:
         feeds =  feedparser.parse(RSS_FEEDS['bbc'])
         articles = feeds['entries']
-        return render_template('home.html',articles = articles)
+    return render_template('home.html',articles = articles)
 def get_news(publicationname):
     feeds = feedparser.parse(RSS_FEEDS[publicationname])
     return feeds['entries']
@@ -39,7 +39,6 @@ def temp():
         else:
             city = request.form['city']
         weather = get_weather(city)
-        return render_template('temp.html',weather = weather)
     else:
         api_url = 'http://api.openweathermap.org/data/2.5/weather?q={}&units=metric&APPID=678c9a313a7a3293f3186ba63375e0c6'
         query = urllib.quote('Hyderabad')
@@ -48,7 +47,7 @@ def temp():
         parsed = json.loads(data)
         city = 'Hyderabad'
         weather = get_weather(city)
-        return render_template('temp.html',weather = weather)
+    return render_template('temp.html',weather = weather)
 def get_weather(query):
     api_url = 'http://api.openweathermap.org/data/2.5/weather?q={}&units=metric&APPID=678c9a313a7a3293f3186ba63375e0c6'
     query = urllib.quote(query)
